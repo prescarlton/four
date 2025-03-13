@@ -5,29 +5,27 @@ import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Badge } from '@/components/ui/badge'
 import ModelManager from '@/model-manager'
-import {
-  Bone,
-  BoxGeometry,
-  LineBasicMaterial,
-  LineSegments,
-  WireframeGeometry,
-} from 'three'
+import { Bone, BoxGeometry, DoubleSide, Mesh, MeshBasicMaterial } from 'three'
 import { degToRad } from 'three/src/math/MathUtils.js'
 
 export default function BoneControls() {
   const [selectedBone, setSelectedBone] = useState<Bone | null>(null)
   const [bones, setBones] = useState<Bone[]>([])
 
-  const highlightMesh = useMemo<LineSegments>(() => {
+  const highlightMesh = useMemo<Mesh>(() => {
     // Create a highlight wireframe box
     const geometry = new BoxGeometry(5, 5, 5) // Adjust based on model size
-    const wireframe = new WireframeGeometry(geometry)
-    const material = new LineBasicMaterial({
+    // const wireframe = new WireframeGeometry(geometry)
+    const material = new MeshBasicMaterial({
       color: 0xffff00,
-      linewidth: 300,
+      // transparent: true,
+      opacity: 0.3,
       depthTest: false,
+      depthWrite: false,
+      side: DoubleSide,
     }) // Yellow wireframe
-    const wireframeMesh = new LineSegments(wireframe, material)
+    const wireframeMesh = new Mesh(geometry, material)
+    wireframeMesh.renderOrder = 1
     return wireframeMesh
   }, [])
 
