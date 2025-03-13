@@ -6,18 +6,14 @@ import ModelManager from '@/model-manager'
 
 export default function ThreeScene({ file }: { file: File | null }) {
   const [scene, setScene] = useState<THREE.Scene | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     if (!file) return
-    console.log('file', file)
-    setIsLoading(true)
     const modelManager = ModelManager.getInstance()
     modelManager
       .loadModel(file)
       .then(() => {
         console.log('model loaded')
         setScene(modelManager.getScene())
-        setIsLoading(false)
       })
       .catch((e) => {
         alert(e)

@@ -42,7 +42,7 @@ export default function BoneControls() {
       setSelectedBone(newBones[0])
       updateHighlight(newBones[0])
     })
-  }, [])
+  })
 
   const updateHighlight = (bone: Bone | null) => {
     // get the mesh closest to the bone
@@ -103,7 +103,7 @@ export default function BoneControls() {
                   <span className="text-primary">{selectedBone.name}</span>
                 </h3>
                 <div className="space-y-4">
-                  {['x', 'y', 'z'].map((axis) => (
+                  {(['x', 'y', 'z'] as const).map((axis) => (
                     <div key={axis}>
                       <label className="mb-1 block text-sm font-medium">
                         Rotate {axis.toUpperCase()}
