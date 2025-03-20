@@ -42,7 +42,7 @@ export default function BoneControls() {
       setSelectedBone(newBones[0])
       updateHighlight(newBones[0])
     })
-  })
+  }, [])
 
   const updateHighlight = (bone: Bone | null) => {
     // get the mesh closest to the bone
@@ -117,13 +117,13 @@ export default function BoneControls() {
                             selectedBone.rotation[axis] ||
                             0,
                         ]}
-                        onValueChange={(value) =>
+                        onValueChange={(value) => {
                           handleRotationChange(
                             selectedBone,
                             axis as 'x' | 'y' | 'z',
                             value[0],
                           )
-                        }
+                        }}
                       />
                       <div className="mt-1 flex justify-between">
                         <span className="text-muted-foreground text-xs">
